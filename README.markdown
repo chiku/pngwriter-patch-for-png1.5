@@ -7,7 +7,7 @@ Use this patch to get pngwriter to work with libpng1.6
 
 Read more about pngwriter at
 
-http://http://pngwriter.sourceforge.net/
+http://pngwriter.sourceforge.net/
 
 _Use at your own risk_
 
