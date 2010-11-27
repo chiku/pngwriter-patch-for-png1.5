@@ -12,4 +12,4 @@ Apply this patch against pngwriter 0.5.4
 
     tar xfv pngwriter-0.5.4.tar.gz
     cd pngwriter-0.5.4
-    patch -Np1 -i patch_for_png_16.diff
+    patch -Np1 -i ../patch_for_png_16.diff
