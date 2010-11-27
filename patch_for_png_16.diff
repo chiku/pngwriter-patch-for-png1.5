@@ -31,7 +31,7 @@ diff -urp pngwriter-0.5.4//src/pngwriter.cc m//src/pngwriter.cc
     
     //Input transformations  
 -   png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
-+   png_get_IHDR(png_ptr, info_ptr, (png_uint_32*)&width, (png_uint_32*)&height, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
++   png_get_IHDR(png_ptr, info_ptr, (png_uint_32*)&width, (png_uint_32*)&height, &bit_depth, &color_type, &interlace_type, NULL, NULL);
     bit_depth_ = bit_depth; 
     colortype_ = color_type; 
     
@@ -49,13 +49,13 @@ diff -urp pngwriter-0.5.4//src/pngwriter.cc m//src/pngwriter.cc
  	
  	// Just in case any of these have changed?
 -	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
-+	png_get_IHDR(png_ptr, info_ptr, (png_uint_32*)&width, (png_uint_32*)&height, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
++	png_get_IHDR(png_ptr, info_ptr, (png_uint_32*)&width, (png_uint_32*)&height, &bit_depth, &color_type, &interlace_type, NULL, NULL);
  	bit_depth_ = bit_depth; 
  	colortype_ = color_type; 
       } 
     
 -   if(!read_png_image(fp, png_ptr, info_ptr, &image, &width, &height)) 
-+   if(!read_png_image((FILE*)fp, (png_struct*)png_ptr, (png_info*)info_ptr, (png_byte***)&image, (png_uint_32*)&width, (png_uint_32*)&height)) 
++   if(!read_png_image((FILE*)fp, (png_struct*)png_ptr, (png_info*)info_ptr, (png_byte***)&image, (png_uint_32*)&width, (png_uint_32*)&height))
       { 
  	std::cerr << " PNGwriter::readfromfile - ERROR **: Error opening file " << name << ". read_png_image() failed." << std::endl; 
  	// fp has been closed already if read_png_image() fails. 
