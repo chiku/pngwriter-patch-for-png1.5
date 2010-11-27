@@ -5,6 +5,10 @@ pngwriter 0.5.4 currently works with libpng1.4
 
 Use this patch to get pngwriter to work with libpng1.6
 
+Read more about pngwriter at
+
+http://http://pngwriter.sourceforge.net/
+
 _Use at your own risk_
 
 Apply this patch against pngwriter 0.5.4
