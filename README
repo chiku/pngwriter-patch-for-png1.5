@@ -1,4 +1,5 @@
 A hacked up patch to get pngwriter to work with libpng16
+pngwriter 0.5.4 currently works with libpng1.4
 Use at your own risk
 
 Apply this patch against pngwriter 0.5.4
