@@ -1,6 +1,57 @@
-diff -urp pngwriter-0.5.4//src/pngwriter.cc m//src/pngwriter.cc
---- pngwriter-0.5.4//src/pngwriter.cc	2009-02-11 03:15:16.000000000 +0530
-+++ m//src/pngwriter.cc	2010-11-27 23:27:28.000000000 +0530
+diff --git a/examples/pngtest.cc b/examples/pngtest.cc
+--- a/examples/pngtest.cc
++++ b/examples/pngtest.cc
+@@ -45,7 +45,7 @@
+ 
+ #include <pngwriter.h>
+ #include <math.h>
+-#include <iostream.h>
++#include <iostream>
+ #include <string>
+ using namespace std;
+ #include <time.h>
+diff --git a/examples/pngtest.espaniol.cc b/examples/pngtest.espaniol.cc
+--- a/examples/pngtest.espaniol.cc
++++ b/examples/pngtest.espaniol.cc
+@@ -44,7 +44,7 @@
+   
+ #include "../src/pngwriter.h"
+ #include <math.h>
+-#include <iostream.h>
++#include <iostream>
+ #include <string>
+ using namespace std;
+ #include <time.h>
+diff --git a/src/pngwriter.cc b/src/pngwriter.cc
+--- a/src/pngwriter.cc
++++ b/src/pngwriter.cc
+@@ -637,7 +637,7 @@ void pngwriter::plot(int x, int y, int red, int green, int blue)
+ 	blue = 0;
+      }
+ 
+-   if((bit_depth_ == 16))
++   if(bit_depth_ == 16)
+      {
+ 	//	if( (height_-y >-1) && (height_-y <height_) && (6*(x-1) >-1) && (6*(x-1)+5<6*width_) )
+ 	if( (y<=height_) && (y>0) && (x>0) && (x<=width_) )
+@@ -660,7 +660,7 @@ void pngwriter::plot(int x, int y, int red, int green, int blue)
+ 	 */
+      }
+ 
+-   if((bit_depth_ == 8))
++   if(bit_depth_ == 8)
+      {
+ 	//	 if( (height_-y >-1) && (height_-y <height_) && (3*(x-1) >-1) && (3*(x-1)+5<3*width_) )
+ 	if( (y<height_+1) && (y>0) && (x>0) && (x<width_+1) )
+@@ -883,7 +883,7 @@ void pngwriter::pngwriter_rename(long unsigned int index)
+ 
+    //   %[flags][width][.precision][modifiers]type
+    //
+-   if((index > 999999999)||(index < 0))
++   if(index > 999999999)
+      {
+ 	std::cerr << " PNGwriter::pngwriter_rename - ERROR **: Numerical name is out of 0 - 999 999 999 range (" << index <<")." << std::endl;
+ 	return;
 @@ -988,19 +988,19 @@ void pngwriter::close()
     time(&gmt);
     png_convert_from_time_t(&mod_time, gmt);
@@ -18,15 +69,16 @@ diff -urp pngwriter-0.5.4//src/pngwriter.cc m//src/pngwriter.cc
     text_ptr[2].text = textdescription_;
     text_ptr[2].compression = PNG_TEXT_COMPRESSION_NONE;
 -   text_ptr[3].key = "Creation Time";
+-   text_ptr[3].text = png_convert_to_rfc1123(png_ptr, &mod_time);
 +   text_ptr[3].key = (char*)"Creation Time";
-    text_ptr[3].text = png_convert_to_rfc1123(png_ptr, &mod_time);
++   text_ptr[3].text = (char*)png_convert_to_rfc1123(png_ptr, &mod_time);
     text_ptr[3].compression = PNG_TEXT_COMPRESSION_NONE;
 -   text_ptr[4].key = "Software";
 +   text_ptr[4].key = (char*)"Software";
     text_ptr[4].text = textsoftware_;
     text_ptr[4].compression = PNG_TEXT_COMPRESSION_NONE;
     png_set_text(png_ptr, info_ptr, text_ptr, 5);
-@@ -1294,7 +1294,7 @@ void pngwriter::readfromfile(char * name
+@@ -1294,7 +1294,7 @@ void pngwriter::readfromfile(char * name)
       } 
     
     //Input transformations  
@@ -35,7 +87,7 @@ diff -urp pngwriter-0.5.4//src/pngwriter.cc m//src/pngwriter.cc
     bit_depth_ = bit_depth; 
     colortype_ = color_type; 
     
-@@ -1311,7 +1311,7 @@ void pngwriter::readfromfile(char * name
+@@ -1311,7 +1311,7 @@ void pngwriter::readfromfile(char * name)
     if(color_type == PNG_COLOR_TYPE_GRAY && bit_depth<8) 
       { 
  	// png_set_expand(png_ptr); 
@@ -44,7 +96,7 @@ diff -urp pngwriter-0.5.4//src/pngwriter.cc m//src/pngwriter.cc
  	transformation_ = 1; 
       } 
     
-@@ -1342,12 +1342,12 @@ void pngwriter::readfromfile(char * name
+@@ -1342,12 +1342,12 @@ void pngwriter::readfromfile(char * name)
  	png_read_update_info(png_ptr, info_ptr); 
  	
  	// Just in case any of these have changed?
@@ -59,12 +111,12 @@ diff -urp pngwriter-0.5.4//src/pngwriter.cc m//src/pngwriter.cc
       { 
  	std::cerr << " PNGwriter::readfromfile - ERROR **: Error opening file " << name << ". read_png_image() failed." << std::endl; 
  	// fp has been closed already if read_png_image() fails. 
-@@ -1530,7 +1530,7 @@ int pngwriter::read_png_info(FILE *fp, p
+@@ -1530,7 +1530,7 @@ int pngwriter::read_png_info(FILE *fp, png_structp *png_ptr, png_infop *info_ptr
  	fclose(fp);
  	return 0;
       }
 -   if (setjmp((*png_ptr)->jmpbuf)) /*(setjmp(png_jmpbuf(*png_ptr)) )*//////////////////////////////////////
-+   if (setjmp(png_jmpbuf(*png_ptr))) /*(setjmp(png_jmpbuf(*png_ptr)) )*//////////////////////////////////////
++   if (setjmp(png_jmpbuf(*png_ptr))) /////////////////////////////////////
       {
  	png_destroy_read_struct(png_ptr, info_ptr, (png_infopp)NULL);
  	std::cerr << " PNGwriter::read_png_info - ERROR **: This file may be a corrupted PNG file. (setjmp(*png_ptr)->jmpbf) failed)." << std::endl;
