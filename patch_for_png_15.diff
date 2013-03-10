@@ -78,15 +78,15 @@ diff --git a/src/pngwriter.cc b/src/pngwriter.cc
     text_ptr[4].text = textsoftware_;
     text_ptr[4].compression = PNG_TEXT_COMPRESSION_NONE;
     png_set_text(png_ptr, info_ptr, text_ptr, 5);
-@@ -1294,7 +1294,7 @@ void pngwriter::readfromfile(char * name)
-      } 
-    
-    //Input transformations  
--   png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
-+   png_get_IHDR(png_ptr, info_ptr, (png_uint_32*)&width, (png_uint_32*)&height, &bit_depth, &color_type, &interlace_type, NULL, NULL);
-    bit_depth_ = bit_depth; 
-    colortype_ = color_type; 
-    
+@@ -1205,7 +1205,7 @@ void pngwriter::readfromfile(char * name)
+    png_structp     png_ptr;
+    png_infop       info_ptr;
+    unsigned char   **image;
+-   unsigned long   width, height;
++   png_uint_32     width, height;
+    int bit_depth, color_type, interlace_type;
+    //   png_uint_32     i;
+    //
 @@ -1311,7 +1311,7 @@ void pngwriter::readfromfile(char * name)
     if(color_type == PNG_COLOR_TYPE_GRAY && bit_depth<8) 
       { 
